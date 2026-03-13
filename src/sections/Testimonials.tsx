@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Quote, Star, CheckCircle, Flame, Heart, Dumbbell } from 'lucide-react';
@@ -39,15 +39,36 @@ const testimonials: Testimonial[] = [
     rating: 5,
     verified: true,
   },
+  {
+    name: 'David M.',
+    program: 'Weight Loss',
+    result: 'Lost 30 LBS in 3 months',
+    quote: 'Lost 30 LBS in 3 months. The trainers here actually care about your progress and push you to be your best.',
+    rating: 5,
+    verified: true,
+  },
+  {
+    name: 'Lisa P.',
+    program: 'Strength Training',
+    result: 'Gained 12 lbs muscle',
+    quote: 'Best decision I ever made. The community here is incredible and the results speak for themselves.',
+    rating: 5,
+    verified: true,
+  },
+  {
+    name: 'Chris T.',
+    program: 'Muscle Building',
+    result: 'Built elite physique',
+    quote: 'From day one, I felt welcomed. The personalized attention helped me achieve goals I never thought possible.',
+    rating: 5,
+    verified: true,
+  },
 ];
 
 const Testimonials = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
-  const sliderRef = useRef<HTMLDivElement>(null);
-  const [sliderPosition, setSliderPosition] = useState(50);
-  const [isDragging, setIsDragging] = useState(false);
-  const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const cardsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -67,37 +88,29 @@ const Testimonials = () => {
         }
       );
 
-      // Before/After slider animation
-      gsap.fromTo(
-        sliderRef.current,
-        { opacity: 0, scale: 0.95 },
-        {
-          opacity: 1,
-          scale: 1,
-          duration: 1,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: sliderRef.current,
-            start: 'top 75%',
-          },
-        }
-      );
+      // Cards animation
+      const cards = cardsRef.current?.querySelectorAll('.testimonial-card');
+      if (cards) {
+        gsap.fromTo(
+          cards,
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: cardsRef.current,
+              start: 'top 80%',
+            },
+          }
+        );
+      }
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
-
-  const handleSliderMove = (e: React.MouseEvent | React.TouchEvent) => {
-    if (!isDragging) return;
-    
-    const rect = sliderRef.current?.getBoundingClientRect();
-    if (!rect) return;
-
-    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
-    const x = clientX - rect.left;
-    const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
-    setSliderPosition(percentage);
-  };
 
   return (
     <section
@@ -117,131 +130,68 @@ const Testimonials = () => {
           <span className="font-inter text-sm text-crimson tracking-[0.3em] uppercase">
             Success Stories
           </span>
-          <h2 className="font-oswald text-4xl md:text-5xl lg:text-6xl font-bold text-white mt-4">
-            TRANSFORMATIONS & <span className="text-gradient">TESTIMONIALS</span>
+          <h2 className="font-oswald text-4xl md:text-5xl lg:text-6xl font-bold text-white mt-4 uppercase">
+            TRANSFORMATIONS <span className="text-crimson">& TESTIMONIALS</span>
           </h2>
           <p className="font-inter text-cool-gray max-w-2xl mx-auto mt-4">
             Real results from real members. See how FITKIT has changed lives.
           </p>
         </div>
 
-        {/* Before/After 3D Slider */}
-        <div
-          ref={sliderRef}
-          className="relative max-w-4xl mx-auto mb-16 perspective-1000"
+        {/* Testimonial Cards Grid */}
+        <div 
+          ref={cardsRef}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[30px] max-w-6xl mx-auto"
         >
-          <div 
-            className="relative h-[400px] md:h-[500px] rounded-3xl overflow-hidden cursor-ew-resize preserve-3d shadow-3d"
-            onMouseMove={handleSliderMove}
-            onMouseUp={() => setIsDragging(false)}
-            onMouseLeave={() => setIsDragging(false)}
-            onTouchMove={handleSliderMove}
-            onTouchEnd={() => setIsDragging(false)}
-          >
-            {/* After Image (Full) */}
-            <div className="absolute inset-0">
-              <img
-                src="/transformation.jpg"
-                alt="After"
-                className="w-full h-full object-cover"
-              />
-            </div>
-
-            {/* Before Image (Clipped) */}
-            <div 
-              className="absolute inset-0 overflow-hidden"
-              style={{ 
-                clipPath: `inset(0 ${100 - sliderPosition}% 0 0)`,
-                filter: 'grayscale(100%)',
-              }}
-            >
-              <img
-                src="/transformation.jpg"
-                alt="Before"
-                className="w-full h-full object-cover"
-              />
-            </div>
-
-            {/* Slider Handle */}
-            <div
-              className="absolute top-0 bottom-0 w-1 bg-crimson cursor-ew-resize"
-              style={{ left: `${sliderPosition}%` }}
-              onMouseDown={() => setIsDragging(true)}
-              onTouchStart={() => setIsDragging(true)}
-            >
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-crimson rounded-full flex items-center justify-center shadow-glow-red animate-pulse-glow">
-                <div className="flex gap-1">
-                  <div className="w-1 h-4 bg-white/50 rounded-full" />
-                  <div className="w-1 h-4 bg-white/50 rounded-full" />
-                </div>
-              </div>
-            </div>
-
-            {/* Labels */}
-            <div 
-              className="absolute top-6 left-6 px-4 py-2 bg-void/80 backdrop-blur-sm rounded-full font-inter text-sm text-white"
-              style={{ opacity: sliderPosition > 20 ? 1 : 0 }}
-            >
-              BEFORE
-            </div>
-            <div 
-              className="absolute top-6 right-6 px-4 py-2 bg-crimson/80 backdrop-blur-sm rounded-full font-inter text-sm text-white"
-              style={{ opacity: sliderPosition < 80 ? 1 : 0 }}
-            >
-              AFTER
-            </div>
-
-            {/* Result Badge */}
-            <div className="absolute bottom-6 left-6 glass rounded-xl px-4 py-3">
-              <p className="font-oswald text-xl text-white">Lost 30 LBS</p>
-              <p className="font-inter text-xs text-cool-gray">in 3 months</p>
-            </div>
-          </div>
-
-        </div>
-
-        {/* Testimonial Cards */}
-        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {testimonials.map((testimonial, index) => (
             <div
               key={index}
-              className={`glass-card rounded-3xl p-6 transition-all duration-500 cursor-pointer ${
-                activeTestimonial === index ? 'scale-105 border-crimson/30' : 'hover:scale-[1.02]'
-              }`}
-              onClick={() => setActiveTestimonial(index)}
+              className="testimonial-card relative border border-white/10 rounded-[16px] p-[30px] bg-[#1a1a1a] transition-all duration-300 hover:border-crimson/50 group flex flex-col h-full"
             >
-              {/* Quote Icon */}
-              <Quote className="w-8 h-8 text-crimson/30 mb-4" />
+              {/* Quotation Marks */}
+              <Quote 
+                className="w-[48px] h-[48px] text-crimson mb-4 flex-shrink-0" 
+                strokeWidth={1.5}
+              />
 
               {/* Quote Text */}
-              <p className="font-inter text-sm text-cool-gray mb-6 line-clamp-4">
+              <p className="font-inter text-white/90 text-[16px] leading-[1.6] mb-6 flex-grow">
                 "{testimonial.quote}"
               </p>
 
-              {/* Rating */}
-              <div className="flex gap-1 mb-4">
+              {/* Star Rating */}
+              <div className="flex gap-1 mb-6">
                 {[...Array(testimonial.rating)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+                  <Star 
+                    key={i} 
+                    className="w-[18px] h-[18px] text-yellow-500 fill-yellow-500" 
+                  />
                 ))}
               </div>
 
-              {/* Author */}
-              <div className="flex items-center justify-between">
+              {/* Author Info */}
+              <div className="flex items-center justify-between mb-6">
                 <div>
-                  <p className="font-oswald text-lg text-white">{testimonial.name}</p>
-                  <p className="font-inter text-xs text-crimson">{testimonial.program}</p>
+                  <h4 className="font-inter font-bold text-[18px] text-white">
+                    {testimonial.name}
+                  </h4>
+                  <p className="font-inter text-[14px] text-crimson mt-1 font-medium">
+                    {testimonial.program}
+                  </p>
                 </div>
                 {testimonial.verified && (
-                  <div className="flex items-center gap-1 text-xs text-green-500">
+                  <div className="flex items-center gap-1 text-[12px] text-green-500">
                     <CheckCircle className="w-4 h-4" />
-                    <span>Verified</span>
+                    <span className="font-medium">Verified</span>
                   </div>
                 )}
               </div>
 
-              {/* Result */}
-              <div className="mt-4 pt-4 border-t border-white/10">
-                <p className="font-oswald text-lg text-white">{testimonial.result}</p>
+              {/* Result Bar */}
+              <div className="mt-auto pt-6 border-t border-white/10">
+                <p className="font-oswald text-lg text-white uppercase tracking-wide">
+                  {testimonial.result}
+                </p>
               </div>
             </div>
           ))}
