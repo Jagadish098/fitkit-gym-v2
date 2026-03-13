@@ -1,0 +1,321 @@
+/* FITKIT - Premium Fitness App Styles */
+
+/* 3D Card Effects */
+.card-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-3d:hover {
+  transform: translateZ(20px) rotateX(2deg) rotateY(-2deg);
+}
+
+/* Glassmorphism */
+.glass-card {
+  background: linear-gradient(145deg, rgba(26, 26, 31, 0.9) 0%, rgba(15, 15, 19, 0.95) 100%);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.5),
+    0 5px 15px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* Button Styles */
+.btn-primary {
+  @apply relative px-8 py-4 bg-crimson text-white font-oswald font-semibold uppercase tracking-wider rounded-full overflow-hidden transition-all duration-300;
+  box-shadow: 0 4px 20px rgba(255, 26, 26, 0.4);
+}
+
+.btn-primary::before {
+  content: '';
+  @apply absolute inset-0 bg-gradient-to-r from-crimson to-blood-orange opacity-0 transition-opacity duration-300;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 30px rgba(255, 26, 26, 0.6);
+}
+
+.btn-primary:hover::before {
+  opacity: 1;
+}
+
+.btn-primary:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-secondary {
+  @apply relative px-8 py-4 bg-transparent text-white font-oswald font-semibold uppercase tracking-wider rounded-full border-2 border-crimson transition-all duration-300;
+}
+
+.btn-secondary:hover {
+  @apply bg-crimson/10;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(255, 26, 26, 0.3);
+}
+
+/* Section Reveal Animation */
+.reveal-section {
+  opacity: 1;
+}
+
+/* 3D Text Effect */
+.text-3d {
+  text-shadow: 
+    1px 1px 0 rgba(139, 0, 0, 0.8),
+    2px 2px 0 rgba(139, 0, 0, 0.6),
+    3px 3px 0 rgba(139, 0, 0, 0.4),
+    4px 4px 0 rgba(139, 0, 0, 0.2),
+    5px 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* Gradient Overlays */
+.gradient-overlay-bottom {
+  background: linear-gradient(180deg, transparent 0%, #0a0a0f 100%);
+}
+
+.gradient-overlay-top {
+  background: linear-gradient(0deg, transparent 0%, #0a0a0f 100%);
+}
+
+/* Red Glow Effects */
+.glow-red-sm {
+  box-shadow: 0 0 15px rgba(255, 26, 26, 0.3);
+}
+
+.glow-red-md {
+  box-shadow: 0 0 30px rgba(255, 26, 26, 0.4);
+}
+
+.glow-red-lg {
+  box-shadow: 0 0 60px rgba(255, 26, 26, 0.5);
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Floating Animation */
+.floating {
+  animation: floating 3s ease-in-out infinite;
+}
+
+@keyframes floating {
+  0%, 100% {
+    transform: translateY(0) translateZ(10px);
+  }
+  50% {
+    transform: translateY(-15px) translateZ(10px);
+  }
+}
+
+/* Pulse Animation */
+.pulse-red {
+  animation: pulseRed 2s ease-in-out infinite;
+}
+
+@keyframes pulseRed {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 26, 26, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(255, 26, 26, 0.7);
+  }
+}
+
+/* Horizontal Scroll Container */
+.horizontal-scroll {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.horizontal-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.horizontal-scroll > * {
+  scroll-snap-align: center;
+  flex-shrink: 0;
+}
+
+/* Card Tilt Effect */
+.tilt-card {
+  transition: transform 0.3s ease-out;
+  transform-style: preserve-3d;
+}
+
+/* Stagger Animation Delays */
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+.stagger-5 { animation-delay: 0.5s; }
+
+/* Grid Pattern Background */
+.grid-pattern {
+  background-image: 
+    linear-gradient(rgba(255, 26, 26, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 26, 26, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Noise Texture Overlay */
+.noise-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.02;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+/* Custom Range Slider */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 6px;
+  background: linear-gradient(90deg, #1a1a1f 0%, #ff1a1a 100%);
+  border-radius: 3px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #ff1a1a;
+  border-radius: 50%;
+  margin-top: -7px;
+  box-shadow: 0 0 15px rgba(255, 26, 26, 0.6);
+  transition: transform 0.2s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+/* Flip Card */
+.flip-card {
+  perspective: 1000px;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: preserve-3d;
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.flip-card-back {
+  transform: rotateY(180deg);
+}
+
+/* Accordion Animation */
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.accordion-content.open {
+  max-height: 500px;
+}
+
+/* Timeline Styles */
+.timeline-line {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(180deg, #ff1a1a 0%, transparent 100%);
+}
+
+.timeline-node {
+  position: relative;
+}
+
+.timeline-node::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 12px;
+  background: #ff1a1a;
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(255, 26, 26, 0.6);
+}
+
+/* Progress Ring */
+.progress-ring-circle {
+  transition: stroke-dashoffset 0.5s ease-out;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  .card-3d:hover {
+    transform: none;
+  }
+  
+  .text-3d {
+    text-shadow: 
+      1px 1px 0 rgba(139, 0, 0, 0.6),
+      2px 2px 5px rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .floating,
+  .pulse-red,
+  .scroll-indicator {
+    animation: none;
+  }
+  
+  .card-3d,
+  .tilt-card,
+  .flip-card-inner {
+    transition: none;
+  }
+}
