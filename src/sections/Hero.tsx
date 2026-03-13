@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ChevronDown, Play, ArrowRight } from 'lucide-react';
+import { ChevronDown, Phone } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -66,48 +66,12 @@ const Hero = () => {
           delay: 0.9,
         }
       );
-
-      // Scroll-triggered title split effect
-      ScrollTrigger.create({
-        trigger: heroRef.current,
-        start: 'top top',
-        end: '50% top',
-        scrub: 1,
-        onUpdate: (self) => {
-          const progress = self.progress;
-          if (titleRef.current) {
-            const lines = titleRef.current.querySelectorAll('.title-line');
-            gsap.to(lines[0], {
-              x: -progress * 50,
-              y: -progress * 30,
-              opacity: 1 - progress * 0.5,
-            });
-            gsap.to(lines[1], {
-              x: progress * 50,
-              y: -progress * 30,
-              opacity: 1 - progress * 0.5,
-            });
-          }
-        },
-      });
     }, heroRef);
 
     return () => ctx.revert();
   }, []);
 
-  const scrollToServices = () => {
-    const element = document.querySelector('#services');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
 
-  const scrollToMembership = () => {
-    const element = document.querySelector('#membership');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
 
   return (
     <section
@@ -136,78 +100,45 @@ const Hero = () => {
       {/* Content */}
       <div
         ref={contentRef}
-        className="relative z-10 w-full px-4 sm:px-6 lg:px-8 xl:px-12 pt-20"
+        className="relative z-10 w-full px-4 sm:px-6 lg:px-8 xl:px-12 flex flex-col items-center justify-center text-center"
       >
-        <div className="max-w-5xl mx-auto text-center perspective-1000">
-          {/* Pre-title */}
-          <div className="mb-6 overflow-hidden">
+        <div className="max-w-[900px] mx-auto perspective-1000">
+          {/* Subtitle */}
+          <div className="mb-[20px] overflow-hidden">
             <p className="font-inter text-sm md:text-base text-crimson tracking-[0.3em] uppercase animate-slide-up">
-              Premium Fitness Experience
+              START YOUR JOURNEY
             </p>
           </div>
 
-          {/* Main Title with 3D Effect */}
+          {/* Main Title */}
           <h1
             ref={titleRef}
-            className="font-oswald text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold text-white leading-none mb-8 preserve-3d"
+            className="font-oswald text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white leading-[1.1] mb-[25px] preserve-3d"
           >
-            <span className="title-line block text-3d">KEEP BODY</span>
-            <span className="title-line block text-gradient text-3d mt-2">
-              FIT & STRONG
-            </span>
+            START YOUR <span className="text-gradient block sm:inline">TRANSFORMATION</span>{' '}
+            <span className="text-crimson italic block sm:inline">TODAY</span>
           </h1>
 
-          {/* Subtitle */}
+          {/* Subtext */}
           <p
             ref={subtitleRef}
-            className="font-inter text-base md:text-lg text-cool-gray max-w-xl mx-auto mb-10"
+            className="font-inter text-base md:text-lg text-cool-gray max-w-2xl mx-auto mb-[35px]"
           >
-            Ready to change your physique? Join FITKIT and unlock your full potential
-            with world-class trainers, premium equipment, and a community that pushes
-            you to be your best.
+            Join 50000 members already transforming their lives
           </p>
 
-          {/* CTA Buttons */}
+          {/* CTA Button */}
           <div
             ref={buttonsRef}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6"
+            className="flex items-center justify-center"
           >
-            <button
-              onClick={scrollToMembership}
-              className="btn-primary group flex items-center gap-3"
+            <a
+              href="tel:+15551234567"
+              className="btn-primary group flex items-center gap-3 px-10 py-5"
             >
-              <span>Join With Us</span>
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </button>
-            <button
-              onClick={scrollToServices}
-              className="btn-secondary group flex items-center gap-3"
-            >
-              <Play className="w-5 h-5" />
-              <span>Our Services</span>
-            </button>
-          </div>
-
-          {/* Stats */}
-          <div className="mt-16 grid grid-cols-3 gap-8 max-w-lg mx-auto">
-            {[
-              { value: '50K+', label: 'Members' },
-              { value: '100+', label: 'Trainers' },
-              { value: '24/7', label: 'Access' },
-            ].map((stat, index) => (
-              <div
-                key={index}
-                className="text-center"
-                style={{ animationDelay: `${1.2 + index * 0.1}s` }}
-              >
-                <div className="font-oswald text-2xl md:text-3xl font-bold text-white">
-                  {stat.value}
-                </div>
-                <div className="font-inter text-xs md:text-sm text-cool-gray mt-1">
-                  {stat.label}
-                </div>
-              </div>
-            ))}
+              <Phone className="w-5 h-5" />
+              <span>CALL NOW</span>
+            </a>
           </div>
         </div>
       </div>
