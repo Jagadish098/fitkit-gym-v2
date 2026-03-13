@@ -20,7 +20,6 @@ const Navigation = () => {
     { name: 'Trainers', href: '#trainers' },
     { name: 'Facilities', href: '#facilities' },
     { name: 'Schedule', href: '#schedule' },
-    { name: 'Community', href: '#community' },
   ];
 
   const scrollToSection = (href: string) => {

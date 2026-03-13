@@ -10,8 +10,6 @@ import BMICalculator from './sections/BMICalculator';
 import Testimonials from './sections/Testimonials';
 import Schedule from './sections/Schedule';
 import Nutrition from './sections/Nutrition';
-import Community from './sections/Community';
-import FAQ from './sections/FAQ';
 import Footer from './sections/Footer';
 import Navigation from './components/Navigation';
 import ParticleBackground from './components/ParticleBackground';
@@ -71,8 +69,6 @@ function App() {
         <Testimonials />
         <Schedule />
         <Nutrition />
-        <Community />
-        <FAQ />
         <Footer />
       </main>
     </div>
